@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajon Hossain | Professional Portfolio</title>
+    <!-- Modern Fonts & Icons & PDF Library -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        /* Modern UI Variables */
+        :root {
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #6366f1, #4f46e5);
+            --bg-color: #f3f4f6;
+            --surface: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --radius: 20px;
+        }
+
+        * { box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-dark); background-image: radial-gradient(circle at top right, #e0e7ff 0%, transparent 40%), radial-gradient(circle at bottom left, #e0e7ff 0%, transparent 40%); background-attachment: fixed; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 850px; margin: 0 auto; padding: 30px 20px; }
+
+        /* Public Portfolio Styling */
+        #public-portfolio { animation: slideUp 0.6s ease-out; }
+        
+        .hero-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); padding: 40px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.5); margin-bottom: 40px; }
+        .hero-pic-wrapper { position: relative; width: 150px; height: 150px; margin: 0 auto 20px; border-radius: 50%; padding: 4px; background: var(--primary-gradient); }
+        .hero-pic { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #fff; border: 4px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: bold; color: var(--primary); }
+        .hero-name { font-size: 36px; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
+        .hero-title { font-size: 18px; color: var(--primary); font-weight: 500; margin: 8px 0 15px; }
+        .hero-loc { font-size: 15px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .hero-about { font-size: 16px; color: var(--text-light); max-width: 650px; margin: 0 auto; line-height: 1.8; }
+
+        .section-title { font-size: 24px; font-weight: 700; margin: 40px 0 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: var(--primary); }
+
+        /* Grids */
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+        .card { background: var(--surface); padding: 25px 20px; border-radius: 16px; text-align: center; box-shadow: var(--shadow); transition: all 0.3s ease; border: 1px solid rgba(0,0,0,0.02); font-weight: 600; font-size: 16px; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.1); border-color: rgba(79, 70, 229, 0.2); }
+        .card i { font-size: 28px; color: var(--primary); }
+
+        .proj-list { display: grid; gap: 15px; }
+        .proj-item { background: var(--surface); padding: 20px 25px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); transition: 0.3s; }
+        .proj-item:hover { transform: scale(1.02); border-left: 4px solid var(--primary); }
+        .proj-name { font-weight: 600; font-size: 17px; }
+        .btn-view { background: #e0e7ff; color: var(--primary); padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
+        .btn-view:hover { background: var(--primary); color: #fff; }
+
+        /* Socials */
+        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        .social-btn { padding: 15px; border-radius: 14px; font-weight: 600; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 15px; transition: 0.3s; }
+        .social-btn:hover { filter: brightness(1.1); transform: translateY(-3px); }
+        .bg-wa { background: #25D366; } .bg-fb { background: #1877F2; } 
+        .bg-yt { background: #FF0000; } .bg-em { background: #ea4335; }
+        
+        .contact-hero-btn { display: block; width: 100%; text-align: center; background: var(--text-dark); color: white; padding: 20px; border-radius: 16px; font-size: 18px; font-weight: 600; margin-top: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s; }
+        .contact-hero-btn:hover { background: var(--primary); }
+
+        /* Admin Trigger & Modal */
+        .footer { text-align: center; margin-top: 60px; color: #94a3b8; font-size: 14px; padding-bottom: 30px; }
+        .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; }
+        .admin-trigger:hover { opacity: 1; color: var(--primary); }
+
+        .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-content { background: var(--surface); padding: 40px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: zoomIn 0.3s ease; }
+        .modal-input { width: 100%; padding: 15px; margin: 20px 0; border: 2px solid #e2e8f0; border-radius: 12px; font-family: inherit; font-size: 16px; text-align: center; outline: none; transition: 0.3s; }
+        .modal-input:focus { border-color: var(--primary); }
+        .btn-main { width: 100%; background: var(--primary-gradient); color: white; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3); }
+
+        /* ADMIN DASHBOARD UI */
+        #admin-panel { display: none; background: #fff; min-height: 100vh; animation: fadeIn 0.4s; }
+        .admin-header { background: var(--text-dark); padding: 15px 20px; color: white; display: flex; gap: 15px; overflow-x: auto; position: sticky; top: 0; z-index: 10; }
+        .admin-tab { padding: 12px 20px; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; font-weight: 500; white-space: nowrap; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .admin-tab:hover { background: rgba(255,255,255,0.2); }
+        .admin-tab.active { background: var(--primary); }
+        
+        .admin-body { padding: 30px 20px; max-width: 900px; margin: 0 auto; }
+        .admin-section { display: none; }
+        .admin-section.active { display: block; animation: slideUp 0.4s; }
+
+        .admin-title { font-size: 28px; font-weight: 700; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+
+        /* Forms */
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-dark); }
+        .form-control { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-family: inherit; font-size: 15px; transition: 0.3s; outline: none; }
+        .form-control:focus { border-color: var(--primary); }
+        
+        /* Canvas */
+        canvas { border: 2px dashed #cbd5e1; width: 100%; height: 200px; background: #f8fafc; border-radius: 12px; touch-action: none; margin-bottom: 10px; }
+        
+        .btn-flex { display: flex; gap: 10px; }
+        .btn-action { flex: 1; padding: 15px; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .bg-red { background: #ef4444; } .bg-green { background: #10b981; } .bg-blue { background: var(--primary); }
+
+        /* Edit Lists */
+        .edit-row { display: flex; gap: 10px; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 15px; align-items: center; flex-wrap: wrap; }
+        .edit-row input { flex: 1; min-width: 200px; }
+        .btn-del { background: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+        /* Client Cards */
+        .client-memo-card { border: 1px solid #e2e8f0; padding: 25px; border-radius: 16px; margin-bottom: 20px; background: var(--surface); box-shadow: var(--shadow); position: relative; }
+        .client-memo-card h3 { margin: 0 0 10px 0; color: var(--primary); font-size: 20px; }
+        .client-memo-card img { max-width: 200px; border: 2px dashed #cbd5e1; padding: 10px; border-radius: 8px; margin-top: 15px; }
+
+        /* Photo Upload UI */
+        .upload-box { text-align: center; padding: 30px; border: 2px dashed #cbd5e1; border-radius: 16px; background: #f8fafc; margin-bottom: 20px; }
+        .preview-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); margin: 0 auto 15px; display: none; }
+        .preview-fallback { width: 120px; height: 120px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; color: var(--primary); margin: 0 auto 15px; }
+        .upload-btn { background: var(--primary); color: white; padding: 10px 20px; border-radius: 30px; cursor: pointer; display: inline-block; font-weight: 600; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Hidden PDF Template */
+        #pdf-template { position: absolute; left: -9999px; top: 0; width: 800px; padding: 40px; background: #fff; color: #000; }
+        .pdf-header { text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 10px; }
+        .pdf-line { border-bottom: 2px solid var(--primary); margin-bottom: 30px; }
+        .pdf-text { font-size: 18px; margin-bottom: 15px; line-height: 1.6; }
+        .pdf-sig { max-width: 250px; border-bottom: 1px solid #000; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- 🌐 PUBLIC PORTFOLIO VIEW -->
+    <div id="public-portfolio" class="container">
+        
+        <div class="hero-card">
+            <div class="hero-pic-wrapper">
+                <img src="" id="pub-photo" class="hero-pic" style="display:none;">
+                <div id="pub-photo-fallback" class="hero-pic">RH</div>
+            </div>
+            <h1 class="hero-name" id="pub-name">রাজন হোসাইন</h1>
+            <div class="hero-title" id="pub-title">সহজ সরল | Web & App Developer</div>
+            <div class="hero-loc"><i class="fa-solid fa-location-dot"></i> <span id="pub-location">Bangladesh</span></div>
+            <p class="hero-about" id="pub-about">আমি একজন পেশাদার ডেভেলপার। আধুনিক প্রযুক্তি ব্যবহার করে আমি বিভিন্ন বিজনেসকে ডিজিটালি সফল হতে সাহায্য করি।</p>
+        </div>
+
+        <div class="section-title"><i class="fa-solid fa-briefcase"></i> My Expertise</div>
+        <div class="grid-cards" id="pub-work-grid">
+            <!-- Dynamic Works -->
+        </div>
+
+        <div class="section-title"><i class="fa-solid fa-rocket"></i> Featured Projects</div>
+        <div class="proj-list" id="pub-project-list">
+            <!-- Dynamic Projects -->
+        </div>
+
+        <div class="section-title"><i class="fa-solid fa-link"></i> Connect With Me</div>
+        <div class="social-grid" id="pub-social-grid">
+            <!-- Dynamic Socials -->
+        </div>
+
+        <a href="#" id="pub-contact-btn" target="_blank" class="contact-hero-btn">Let's Work Together!</a>
+
+        <div class="footer">
+            &copy; 2026 Designed & Developed by Rajon Hossain.<br><br>
+            <span class="admin-trigger" onclick="showLogin()"><i class="fa-solid fa-lock"></i> Admin</span>
+        </div>
+    </div>
+
+
+    <!-- 🔐 LOGIN MODAL -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <i class="fa-solid fa-shield-halved" style="font-size:40px; color:var(--primary); margin-bottom:15px;"></i>
+            <h2>Admin Login</h2>
+            <p style="color:var(--text-light); font-size:14px;">Secure dashboard access</p>
+            <input type="password" id="adminPass" class="modal-input" placeholder="Enter Password">
+            <button class="btn-main" onclick="verifyAdmin()">Login Dashboard</button>
+            <p onclick="closeLogin()" style="margin-top:20px; color:var(--text-light); cursor:pointer; font-size:14px;">Cancel</p>
+        </div>
+    </div>
+
+
+    <!-- ⚙️ ADMIN DASHBOARD -->
+    <div id="admin-panel">
+        <div class="admin-header">
+            <div class="admin-tab active" onclick="openTab('tab-memo')"><i class="fa-solid fa-file-signature"></i> Create Memo</div>
+            <div class="admin-tab" onclick="openTab('tab-dash')"><i class="fa-solid fa-users"></i> Clients</div>
+            <div class="admin-tab" onclick="openTab('tab-profile')"><i class="fa-solid fa-user-pen"></i> Edit Profile</div>
+            <div class="admin-tab" onclick="openTab('tab-content')"><i class="fa-solid fa-list-check"></i> Manage Content</div>
+            <div class="admin-tab" onclick="openTab('tab-social')"><i class="fa-solid fa-share-nodes"></i> Social Links</div>
+            <div class="admin-tab" onclick="logoutAdmin()" style="margin-left:auto; background:#ef4444;"><i class="fa-solid fa-power-off"></i> Exit</div>
+        </div>
+
+        <div class="admin-body">
+            
+            <!-- 📝 TAB 1: CREATE MEMO -->
+            <div id="tab-memo" class="admin-section active">
+                <h2 class="admin-title">Client Contract Memo</h2>
+                <div class="form-group">
+                    <label class="form-label">Client Name</label>
+                    <input type="text" id="memoClientName" class="form-control" placeholder="Enter client name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Project Details & Amount</label>
+                    <textarea id="memoDetails" class="form-control" rows="4" placeholder="App development - 15,000 BDT"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Take Signature</label>
+                    <canvas id="sigCanvas"></canvas>
+                </div>
+                <div class="btn-flex">
+                    <button class="btn-action bg-red" onclick="clearSignature()"><i class="fa-solid fa-eraser"></i> Clear</button>
+                    <button class="btn-action bg-green" style="flex:2;" id="btnSavePdf"><i class="fa-solid fa-download"></i> Save & Download PDF</button>
+                </div>
+            </div>
+
+            <!-- 📊 TAB 2: CLIENT DASHBOARD -->
+            <div id="tab-dash" class="admin-section">
+                <h2 class="admin-title">Saved Contracts & Memos</h2>
+                <div id="clientListArea"><p style="text-align:center; color:#64748b;">Loading...</p></div>
+            </div>
+
+            <!-- 👤 TAB 3: EDIT PROFILE -->
+            <div id="tab-profile" class="admin-section">
+                <h2 class="admin-title">Personal Information</h2>
+                
+                <div class="upload-box">
+                    <img id="admin-photo-preview" class="preview-img" src="">
+                    <div id="admin-photo-fallback" class="preview-fallback">RH</div>
+                    <label class="upload-btn">
+                        <i class="fa-solid fa-camera"></i> Change Photo
+                        <input type="file" id="photoUpload" accept="image/*" style="display:none;">
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="editName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Professional Title</label>
+                    <input type="text" id="editTitle" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" id="editLocation" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">About Description</label>
+                    <textarea id="editAbout" class="form-control" rows="4"></textarea>
+                </div>
+                <button class="btn-action bg-blue" onclick="saveData('Profile')"><i class="fa-solid fa-floppy-disk"></i> Update Profile Info</button>
+            </div>
+
+            <!-- 📋 TAB 4: MANAGE CONTENT -->
+            <div id="tab-content" class="admin-section">
+                <h2 class="admin-title">Expertise & Skills</h2>
+                <div id="admin-work-list"></div>
+                <div class="edit-row">
+                    <input type="text" id="newWorkTitle" class="form-control" placeholder="E.g. 💻 WordPress Expert">
+                    <button class="btn-action bg-green" style="margin:0; padding:14px 20px; width:auto;" onclick="addWork()"><i class="fa-solid fa-plus"></i> Add</button>
+                </div>
+
+                <h2 class="admin-title" style="margin-top:40px;">Featured Projects</h2>
+                <div id="admin-project-list"></div>
+                <div class="edit-row">
+                    <input type="text" id="newProjName" class="form-control" placeholder="Project Title">
+                    <input type="text" id="newProjLink" class="form-control" placeholder="Project Link (URL)">
+                    <button class="btn-action bg-green" style="margin:0; padding:14px 20px; width:auto;" onclick="addProject()"><i class="fa-solid fa-plus"></i> Add</button>
+                </div>
+            </div>
+
+            <!-- 🌐 TAB 5: SOCIAL LINKS -->
+            <div id="tab-social" class="admin-section">
+                <h2 class="admin-title">Social Media & Contact Links</h2>
+                <p style="color:var(--text-light); margin-bottom:20px;">Leave a field empty to hide that button from the public portfolio.</p>
+                
+                <div class="form-group">
+                    <label class="form-label"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> WhatsApp Link/Number</label>
+                    <input type="text" id="editWa" class="form-control" placeholder="e.g. https://wa.me/8801644234178">
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fa-brands fa-facebook" style="color:#1877F2;"></i> Facebook Profile Link</label>
+                    <input type="text" id="editFb" class="form-control" placeholder="https://facebook.com/yourprofile">
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fa-brands fa-youtube" style="color:#FF0000;"></i> YouTube Channel Link</label>
+                    <input type="text" id="editYt" class="form-control" placeholder="https://youtube.com/...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fa-solid fa-envelope" style="color:#ea4335;"></i> Email Address</label>
+                    <input type="email" id="editEmail" class="form-control" placeholder="youremail@example.com">
+                </div>
+                <button class="btn-action bg-blue" onclick="saveData('Social')"><i class="fa-solid fa-floppy-disk"></i> Save Social Links</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Hidden PDF Layout -->
+    <div id="pdf-template">
+        <div class="pdf-header">Contract Memo</div>
+        <div class="pdf-line"></div>
+        <div class="pdf-text"><strong>Developer:</strong> <span id="pdf-dev-name"></span></div>
+        <div class="pdf-text"><strong>Date:</strong> <span id="pdf-date"></span></div>
+        <div class="pdf-text"><strong>Client Name:</strong> <span id="pdf-name"></span></div>
+        <div class="pdf-text"><strong>Project Details & Amount:</strong></div>
+        <div class="pdf-text" id="pdf-details" style="white-space: pre-wrap;"></div>
+        <br><br><br>
+        <div class="pdf-text"><strong>Client Signature:</strong></div>
+        <img id="pdf-sig" class="pdf-sig">
+    </div>
+
+    <!-- Firebase Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, push, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAuHzqQ52IeqPJdlY5hAoNrWj1dfYcD-HA",
+            authDomain: "rajon-871e7.firebaseapp.com",
+            databaseURL: "https://rajon-871e7-default-rtdb.firebaseio.com",
+            projectId: "rajon-871e7",
+            storageBucket: "rajon-871e7.appspot.com"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let uploadedPhotoBase64 = "";
+
+        // --- 1. LOAD DATA REALTIME ---
+        onValue(ref(db, 'Portfolio'), (snapshot) => {
+            const data = snapshot.exists() ? snapshot.val() : {};
+            
+            // PROFILE
+            const p = data.Profile || { name:"রাজন হোসাইন", title:"সহজ সরল | Web & App Developer", location:"Bangladesh", about:"" };
+            document.getElementById('pub-name').innerText = p.name;
+            document.getElementById('pub-title').innerText = p.title;
+            document.getElementById('pub-location').innerText = p.location;
+            document.getElementById('pub-about').innerText = p.about;
+            
+            document.getElementById('editName').value = p.name;
+            document.getElementById('editTitle').value = p.title;
+            document.getElementById('editLocation').value = p.location;
+            document.getElementById('editAbout').value = p.about;
+            
+            if(p.photoBase64) {
+                uploadedPhotoBase64 = p.photoBase64;
+                document.getElementById('pub-photo').src = p.photoBase64;
+                document.getElementById('pub-photo').style.display = 'flex';
+                document.getElementById('pub-photo-fallback').style.display = 'none';
+                document.getElementById('admin-photo-preview').src = p.photoBase64;
+                document.getElementById('admin-photo-preview').style.display = 'block';
+                document.getElementById('admin-photo-fallback').style.display = 'none';
+            }
+
+            // WORKS
+            const pubW = document.getElementById('pub-work-grid');
+            const admW = document.getElementById('admin-work-list');
+            pubW.innerHTML = ""; admW.innerHTML = "";
+            if(data.Works) {
+                Object.keys(data.Works).forEach(k => {
+                    const t = data.Works[k].title;
+                    pubW.innerHTML += `<div class="card">${t}</div>`;
+                    admW.innerHTML += `<div class="edit-row">
+                        <input type="text" class="form-control" value="${t}" readonly>
+                        <button class="btn-del" onclick="deleteItem('Works', '${k}')"><i class="fa-solid fa-trash"></i></button>
+                    </div>`;
+                });
+            } else { pubW.innerHTML = `<div class="card">👨‍🏫 সহজ সরল</div>`; }
+
+            // PROJECTS
+            const pubP = document.getElementById('pub-project-list');
+            const admP = document.getElementById('admin-project-list');
+            pubP.innerHTML = ""; admP.innerHTML = "";
+            if(data.Projects) {
+                Object.keys(data.Projects).forEach(k => {
+                    const d = data.Projects[k];
+                    pubP.innerHTML += `<div class="proj-item">
+                        <span class="proj-name">${d.name}</span>
+                        <a href="${d.link}" target="_blank" class="btn-view">Visit <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>`;
+                    admP.innerHTML += `<div class="edit-row">
+                        <input type="text" class="form-control" value="${d.name}" readonly>
+                        <input type="text" class="form-control" value="${d.link}" readonly>
+                        <button class="btn-del" onclick="deleteItem('Projects', '${k}')"><i class="fa-solid fa-trash"></i></button>
+                    </div>`;
+                });
+            }
+
+            // SOCIAL LINKS
+            const s = data.Social || {};
+            const sGrid = document.getElementById('pub-social-grid');
+            sGrid.innerHTML = "";
+            document.getElementById('editWa').value = s.wa || "";
+            document.getElementById('editFb').value = s.fb || "";
+            document.getElementById('editYt').value = s.yt || "";
+            document.getElementById('editEmail').value = s.email || "";
+
+            if(s.wa) { 
+                sGrid.innerHTML += `<a href="${s.wa}" target="_blank" class="social-btn bg-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>`; 
+                document.getElementById('pub-contact-btn').href = s.wa; // Update main contact button
+            }
+            if(s.fb) sGrid.innerHTML += `<a href="${s.fb}" target="_blank" class="social-btn bg-fb"><i class="fa-brands fa-facebook"></i> Facebook</a>`;
+            if(s.yt) sGrid.innerHTML += `<a href="${s.yt}" target="_blank" class="social-btn bg-yt"><i class="fa-brands fa-youtube"></i> YouTube</a>`;
+            if(s.email) sGrid.innerHTML += `<a href="mailto:${s.email}" class="social-btn bg-em"><i class="fa-solid fa-envelope"></i> Email</a>`;
+        });
+
+        // --- 2. ADMIN & NAVIGATION ---
+        window.showLogin = () => document.getElementById('loginModal').style.display = 'flex';
+        window.closeLogin = () => document.getElementById('loginModal').style.display = 'none';
+        
+        window.verifyAdmin = () => {
+            if(document.getElementById('adminPass').value === 'AmiRajon44') {
+                document.getElementById('public-portfolio').style.display = 'none';
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('adminPass').value = "";
+                resizeCanvas();
+            } else { alert("Incorrect Password!"); }
+        }
+        
+        window.logoutAdmin = () => {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('public-portfolio').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        window.openTab = (tabId) => {
+            document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.admin-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            if(tabId === 'tab-memo') resizeCanvas();
+        }
+
+        // --- 3. PHOTO UPLOAD (Compress) ---
+        document.getElementById('photoUpload').addEventListener('change', function(e){
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event){
+                const img = new Image();
+                img.onload = function(){
+                    const canvas = document.createElement('canvas');
+                    let w = img.width, h = img.height;
+                    if(w>h) { if(w>300) { h*=300/w; w=300; } } else { if(h>300) { w*=300/h; h=300; } }
+                    canvas.width = w; canvas.height = h;
+                    canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+                    uploadedPhotoBase64 = canvas.toDataURL("image/jpeg", 0.8);
+                    document.getElementById('admin-photo-preview').src = uploadedPhotoBase64;
+                    document.getElementById('admin-photo-preview').style.display = 'block';
+                    document.getElementById('admin-photo-fallback').style.display = 'none';
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+
+        // --- 4. CRUD OPERATIONS ---
+        window.saveData = async (type) => {
+            try {
+                if(type === 'Profile') {
+                    await set(ref(db, 'Portfolio/Profile'), {
+                        name: document.getElementById('editName').value,
+                        title: document.getElementById('editTitle').value,
+                        location: document.getElementById('editLocation').value,
+                        about: document.getElementById('editAbout').value,
+                        photoBase64: uploadedPhotoBase64
+                    });
+                    alert("Profile Updated!");
+                } else if(type === 'Social') {
+                    await set(ref(db, 'Portfolio/Social'), {
+                        wa: document.getElementById('editWa').value,
+                        fb: document.getElementById('editFb').value,
+                        yt: document.getElementById('editYt').value,
+                        email: document.getElementById('editEmail').value
+                    });
+                    alert("Social Links Updated!");
+                }
+            } catch(e) { alert("Error saving data."); }
+        }
+
+        window.addWork = async () => {
+            const val = document.getElementById('newWorkTitle').value.trim();
+            if(val) { await push(ref(db, 'Portfolio/Works'), { title: val }); document.getElementById('newWorkTitle').value = ""; }
+        }
+        window.addProject = async () => {
+            const n = document.getElementById('newProjName').value.trim(), l = document.getElementById('newProjLink').value.trim();
+            if(n) { await push(ref(db, 'Portfolio/Projects'), { name: n, link: l }); document.getElementById('newProjName').value = ""; document.getElementById('newProjLink').value = ""; }
+        }
+        window.deleteItem = async (node, id) => {
+            if(confirm("Delete this item?")) await remove(ref(db, `Portfolio/${node}/${id}`));
+        }
+
+        // --- 5. SIGNATURE & MEMO PDF ---
+        const sigCanvas = document.getElementById('sigCanvas');
+        const ctxSig = sigCanvas.getContext('2d');
+        let isDrawing = false;
+        function resizeCanvas() { sigCanvas.width = sigCanvas.parentElement.offsetWidth; sigCanvas.height = 200; }
+        window.addEventListener('resize', resizeCanvas);
+
+        function drawSig(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            const rect = sigCanvas.getBoundingClientRect();
+            const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+            const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+            ctxSig.lineWidth = 3; ctxSig.lineCap = 'round'; ctxSig.strokeStyle = '#4f46e5';
+            ctxSig.lineTo(x, y); ctxSig.stroke();
+            ctxSig.beginPath(); ctxSig.moveTo(x, y);
+        }
+        sigCanvas.addEventListener('mousedown', (e) => { isDrawing = true; drawSig(e); });
+        sigCanvas.addEventListener('mouseup', () => { isDrawing = false; ctxSig.beginPath(); });
+        sigCanvas.addEventListener('mousemove', drawSig);
+        sigCanvas.addEventListener('touchstart', (e) => { isDrawing = true; drawSig(e); }, { passive: false });
+        sigCanvas.addEventListener('touchend', () => { isDrawing = false; ctxSig.beginPath(); });
+        sigCanvas.addEventListener('touchmove', drawSig, { passive: false });
+
+        window.clearSignature = () => ctxSig.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+
+        document.getElementById('btnSavePdf').addEventListener('click', async () => {
+            const name = document.getElementById('memoClientName').value.trim();
+            const details = document.getElementById('memoDetails').value.trim();
+            if (!name || !details) { alert("Fill client name and details!"); return; }
+
+            const signatureData = sigCanvas.toDataURL('image/png');
+            const dateStr = new Date().toLocaleDateString('en-GB'); 
+            
+            try {
+                await push(ref(db, 'ClientMemos'), { clientName: name, projectDetails: details, signatureBase64: signatureData, date: dateStr, timestamp: new Date().toISOString() });
+
+                document.getElementById('pdf-dev-name').innerText = document.getElementById('editName').value || "রাজন হোসাইন";
+                document.getElementById('pdf-date').innerText = dateStr;
+                document.getElementById('pdf-name').innerText = name;
+                document.getElementById('pdf-details').innerText = details;
+                document.getElementById('pdf-sig').src = signatureData;
+
+                html2pdf().set({ margin: 0.5, filename: `${name}_Memo.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                }).from(document.getElementById('pdf-template')).save().then(() => {
+                    alert("Memo saved & PDF downloaded!");
+                    document.getElementById('memoClientName').value = ''; document.getElementById('memoDetails').value = ''; clearSignature();
+                    openTab('tab-dash');
+                });
+            } catch (e) { alert("Error saving memo."); }
+        });
+
+        // --- 6. LOAD CLIENT MEMOS ---
+        onValue(ref(db, 'ClientMemos'), (snapshot) => {
+            const listDiv = document.getElementById('clientListArea');
+            listDiv.innerHTML = ''; 
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                Object.keys(data).reverse().forEach(key => {
+                    const c = data[key];
+                    listDiv.innerHTML += `
+                        <div class="client-memo-card">
+                            <span style="position:absolute; top:25px; right:25px; font-size:13px; color:#94a3b8;"><i class="fa-regular fa-calendar"></i> ${c.date || ""}</span>
+                            <h3><i class="fa-solid fa-file-contract"></i> ${c.clientName}</h3>
+                            <p style="white-space: pre-wrap; font-size:15px; margin:10px 0; color:#475569;">${c.projectDetails}</p>
+                            <img src="${c.signatureBase64}">
+                        </div>`;
+                });
+            } else { listDiv.innerHTML = '<p style="text-align:center; color:#94a3b8;">No memos created yet.</p>'; }
+        });
+    </script>
+</body>
+</html>
